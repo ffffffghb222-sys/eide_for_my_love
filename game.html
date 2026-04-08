@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أغلى إنسانة</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: #880e4f;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            z-index: 1;
+            border: 2px solid #f8bbd0;
+        }
+
+        .step { display: none; animation: fadeIn 0.8s ease; }
+        .active { display: block; }
+
+        h1 { font-size: 1.8rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6; }
+
+        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        
+        button {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background-color: #e91e63;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: #ad1457; transform: scale(1.05); }
+
+        input {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #f8bbd0;
+            width: 80%;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .heart { color: #e91e63; font-size: 40px; animation: beat 1s infinite alternate; margin: 15px 0; }
+
+        @keyframes beat { to { transform: scale(1.1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .floating-heart {
+            position: absolute; color: rgba(233, 30, 99, 0.2);
+            font-size: 20px; pointer-events: none; animation: fall linear infinite;
+        }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="step1" class="step active">
+            <div class="heart">❤️</div>
+            <p>انتي الدنيا وما فيها، ومكانتج بقلبي ما يمليها أحد غيرج.</p>
+            <button onclick="nextStep(2)">التالي</button>
+        </div>
+
+        <div id="step2" class="step">
+            <h1>تحبيني؟</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(3)">نعم</button>
+                <button onclick="nextStep(3)">اي 😂</button>
+            </div>
+        </div>
+
+        <div id="step3" class="step">
+            <p>والله اعرف تحبيني 🙂‍↔️🤍</p>
+            <h1>تقبلين تتزوجيني؟</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(4)">طبعاً</button>
+                <button onclick="nextStep(4)">أكيد</button>
+            </div>
+        </div>
+
+        <div id="step4" class="step">
+            <p>لعد باجر اجي اخطبج 💍</p>
+            <p>زين شكد تردين المقدم؟</p>
+            <input type="number" id="moneyInput" placeholder="اكتبي الرقم بالملايين...">
+            <br>
+            <button onclick="checkMoney()">إرسال</button>
+        </div>
+
+        <div id="stepFinal" class="step">
+            <h1 id="finalMessage"></h1>
+            <div class="heart">💖</div>
+            <p style="font-size: 1.6rem; font-weight: bold; color: #ad1457;">احبج لاري حياتي</p>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(num) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            let target = (num === 'Final') ? 'stepFinal' : 'step' + num;
+            document.getElementById(target).classList.add('active');
+        }
+
+        function checkMoney() {
+            const amount = parseFloat(document.getElementById('moneyInput').value);
+            const finalMsg = document.getElementById('finalMessage');
+
+            if (isNaN(amount)) {
+                alert("اكتبي رقم عفية!");
+                return;
+            }
+
+            // التعديل هنا: إذا كان أكبر من 30 مليون يظهر "هواااي"
+            // إذا كان 30 أو أقل يظهر "والله زين"
+            if (amount > 30000000 || (amount > 30 && amount < 1000000)) {
+                finalMsg.innerText = "هواااي بس مو مشكلة لخاطرج عادي";
+            } else {
+                finalMsg.innerText = "والله زين ما تطلبين هواي 😅";
+            }
+
+            nextStep('Final');
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
