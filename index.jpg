@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  اعتذار </title>
+    <style>
+        /* إعدادات الخلفية العامة */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffeef4; /* لون وردي أساسي */
+            /* خلفية مزخرفة بنقاط ناعمة */
+            background-image: radial-gradient(#ffc1e3 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* الطبقة الزجاجية الأساسية */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4); /* شفافية زجاجية */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            width: 88%;
+            max-width: 360px;
+            padding: 30px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 15px 35px rgba(255, 133, 179, 0.2);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .title {
+            color: #ff4081;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* إطار الصورة الأبيض الواضح */
+        .img-container {
+            background: #fff;
+            border-radius: 25px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .img-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            display: block;
+            min-height: 150px; /* ضمان عدم انهيار الإطار */
+            object-fit: contain;
+        }
+
+        .message {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* منطقة الأزرار */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 60px;
+            position: relative;
+        }
+
+        /* زر القبول */
+        .accept-btn {
+            background: linear-gradient(135deg, #ff80ab, #ff4081);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+            z-index: 5;
+            transition: 0.3s;
+        }
+
+        /* زر الهروب (معدل ليظهر بجانب القبول في البداية) */
+        .escape-btn {
+            background: #f0f0f0;
+            color: #888;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            /* منع الاختفاء المفاجئ */
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        #final-text {
+            display: none;
+            color: #ff4081;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glass-card">
+    <div class="title">الأخت الفاضلة لارا</div>
+    
+    <div class="img-container">
+        <img src="./kitty.png" alt="تحميل الصورة...">
+    </div>
+
+    <div class="message" id="msgText">
+        أعتذر بصدق عن أي إزعاج غير مقصود تسببتُ به.. <br>
+        أقدر رقيّ أخلاقج ومكانتج العزيزة جداً.
+    </div>
+    
+    <div class="btn-group" id="btnGroup">
+        <button class="accept-btn" onclick="celebrate()">قبول الاعتذار</button>
+        <button class="escape-btn" id="runBtn">بعدني زعلانة</button>
+    </div>
+
+    <div id="final-text">
+        ممتن جداً لهيج رقي.. <br>
+        أحبج لارا حياتي ❤️
+    </div>
+</div>
+
+<script>
+    const runBtn = document.getElementById('runBtn');
+
+    // دالة الهروب المحسنة لضمان عدم الاختفاء
+    function flyAway() {
+        // حساب الحدود مع هوامش أمان
+        const padding = 30;
+        const maxX = window.innerWidth - runBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - runBtn.offsetHeight - padding;
+
+        const randomX = Math.max(padding, Math.random() * maxX);
+        const randomY = Math.max(padding, Math.random() * maxY);
+
+        // جعل الزر يطير فوق كل شيء
+        runBtn.style.position = 'fixed';
+        runBtn.style.zIndex = '9999';
+        runBtn.style.left = randomX + 'px';
+        runBtn.style.top = randomY + 'px';
+        
+        // منع أي تأثير قد يجعله يختفي
+        runBtn.style.opacity = '1';
+        runBtn.style.display = 'block';
+    }
+
+    // تفعيل الهروب عند الاقتراب أو اللمس
+    runBtn.addEventListener('mouseover', flyAway);
+    runBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // منع النقرة في المرة الأولى
+        flyAway();
+    });
+
+    // في حال نجحت لارا في الضغط عليه صدفة، يهرب مجدداً
+    runBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        flyAway();
+    });
+
+    function celebrate() {
+        document.getElementById('final-text').style.display = 'block';
+        document.getElementById('btnGroup').style.display = 'none';
+        runBtn.style.display = 'none';
+        document.getElementById('msgText').innerText = "تم قبول الاعتذار بنجاح.. ممتن لج جداً.";
+    }
+</script>
+
+</body>
+</html>
