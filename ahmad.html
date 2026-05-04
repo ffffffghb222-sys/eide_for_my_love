@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى حمودي</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.5s ease;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #4a4a4a;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(37, 117, 252, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* حركات إضافية */
+        .step-content {
+            display: none;
+        }
+
+        .step-active {
+            display: block;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container animate__animated animate__zoomIn">
+    <div id="step1" class="step-content step-active">
+        <h1>هلا حمودي اخوي ❤️</h1>
+        <button class="btn" onclick="goToStep(2)">التالي</button>
+    </div>
+
+    <div id="step2" class="step-content">
+        <h1>اريد اطلب طلب منك 🥺</h1>
+        <button class="btn" onclick="goToStep(3)">اطلب عيوني</button>
+    </div>
+
+    <div id="step3" class="step-content">
+        <h1 style="color: #e91e63;">عادي تنطيني نيجة؟ 😙</h1>
+        <p style="color: #666; font-size: 0.9rem;">(بانتظار الرد...)</p>
+    </div>
+</div>
+
+<script>
+    function goToStep(stepNumber) {
+        // إخفاء كل المراحل
+        document.querySelectorAll('.step-content').forEach(el => {
+            el.classList.remove('step-active');
+        });
+
+        // إظهار المرحلة المطلوبة
+        const nextStep = document.getElementById('step' + stepNumber);
+        nextStep.classList.add('step-active');
+
+        // إذا وصلنا للطلب الأخير، نضيف حركة احتفالية بسيطة
+        if(stepNumber === 3) {
+            Swal.fire({
+                title: 'يا بعد عيوني!',
+                text: 'حمودي، الطلب صار عندك بعد.. شتكول؟',
+                icon: 'question',
+                confirmButtonText: 'تدلل',
+                confirmButtonColor: '#764ba2',
+                backdrop: `rgba(0,0,123,0.4)`
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
+
